@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ToDo List</h1>
+    <div>
+        <form action={{ url_for('add')}} method="POST">
+            <input type="text" name='item' required>
+            <input type="submit" value="Add">
+        </form>
+    </div>
+    <div>
+        <h2>Things to do</h2>
+        <form action={{ url_for('done')}} method="POST">
+        {% for item in pending %}
+        <input type="checkbox" id={{ item.id_x}} name={{ item.id_x}}>
+        <label for={{ item.id_x}}>{{ item.item }}</label><br>
+        {% endfor %}
+        <br><input type="submit" value="Update">
+        </form>
+    </div>
+    <div>
+        <h2>Things completed</h2>
+        {% for item in done %}
+        <label><del>{{ item.item }}</del></label><br>
+        {% endfor %}
+    </div>
+</body>
+</html>
