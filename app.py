@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///E:/Python Projects/ToDo List/todo.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/ganeshku/OneDrive - AMDOCS/Backup Folders/Desktop/Python Projects/Todo-List/todo.db'
 db = SQLAlchemy(app)
 
 class Todo(db.Model):
@@ -15,7 +15,6 @@ def index():
     items = Todo.query.all()
     pending = [x for x in items if not x.complete]
     done = [x for x in items if x.complete]
-    print(items)
     return render_template('index.html', pending=pending, done=done)
 
 @app.route('/add', methods=['POST'])
@@ -28,11 +27,17 @@ def add():
 @app.route('/done', methods=['POST'])
 def done():
     values = list(request.form.keys())
-    print(values)
     for v in values:
         check = Todo.query.filter_by(id_x=int(v)).first()
         check.complete = True
         db.session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/erase', methods=['POST'])
+def erase():
+    print("Delete")
+    Todo.query.filter_by(complete=True).delete()
+    db.session.commit()
     return redirect(url_for('index'))
 
 if __name__ == '__main__':

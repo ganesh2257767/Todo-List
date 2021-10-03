@@ -26,9 +26,12 @@
     </div>
     <div>
         <h2>Things completed</h2>
+        <form action={{ url_for('erase')}} method="POST">
         {% for item in done %}
         <label><del>{{ item.item }}</del></label><br>
         {% endfor %}
+        <br><input type="submit" value="Delete">
+        </form>
     </div>
 </body>
 </html>
